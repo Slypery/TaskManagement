@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.shadow-highlight {
+    box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.1), -5px -5px 12px rgba(254, 252, 232, 0.538);
+}
+
+input {
+    outline: none;
+}
