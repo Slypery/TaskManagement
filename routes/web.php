@@ -15,3 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [Tes::class, 'index']);
+Route::prefix('auth/')->name('auth.')->group(function (){
+    Route::get('', function (){
+        return view('login');
+    })->name('index');
+});
