@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
+@section('sidebar')
+    <x-director_sidebar pageName="{{ $page_name }}" />
+@endsection
+@section('main')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
 
-<body class="bg-yellow-100">
-    <div id="editor"></div>
-    <div class="bg-green-100">
-      tes
-    </div>
-</body>
-
-</html>
+@endsection

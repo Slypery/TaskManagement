@@ -1,0 +1,75 @@
+.table-style {
+    border: 2px solid rgb(126 34 206);
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+.table-style::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.table-style::-webkit-scrollbar-corner {
+    background: rgb(126, 34, 206);
+}
+
+.table-style::-webkit-scrollbar-track {
+    background: rgb(126, 34, 206);
+}
+
+.table-style::-webkit-scrollbar-thumb:vertical {
+    background: rgb(244, 231, 255);
+    border-radius: 0 3px 3px 0;
+    border-left: 2px solid rgb(126, 34, 206);
+}
+
+.table-style::-webkit-scrollbar-thumb:horizontal {
+    background: rgb(244, 231, 255);
+    border-radius: 0 0 3px 3px;
+    border-top: 2px solid rgb(126, 34, 206);
+}
+
+.table-style::-webkit-scrollbar-thumb:hover {
+    background: whitesmoke;
+}
+
+.table-style td {
+    background-color: rgb(251, 244, 234);
+    padding: 5px 10px 5px 10px;
+}
+
+.table-style th {
+    background: rgb(126, 34, 206);
+    color: rgb(254, 252, 232);
+    padding: 5px 10px 5px 10px;
+    text-align: start;
+}
+
+.table-style th {
+    position: sticky;
+    top: 0;
+}
+
+.table-style tbody td:first-child {
+    position: sticky;
+    left: 0;
+}
+
+.table-style th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+}
+
+.table-style tbody>tr {
+    background-color: rgb(168, 85, 247 / 0.05);
+    border-bottom: 1px solid rgb(209, 213, 210);
+}
+
+.table-style tbody>tr:last-child {
+    border: none;
+}
+
+.table-style table {
+    width: 100%;
+}
