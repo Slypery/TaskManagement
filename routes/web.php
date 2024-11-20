@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CAuth;
 use App\Http\Controllers\CDirector;
 use App\Http\Controllers\Tes;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Tes::class, 'index']);
 Route::prefix('auth/')->name('auth.')->group(function () {
-    Route::get('login')->name('login');
+    Route::get('', [CAuth::class, 'index'])->name('index');
+    Route::post('login', [CAuth::class, 'login'])->name('login');
 });
 Route::prefix('director/')->name('director.')->group(function () {
     Route::get('', [CDirector::class, 'dashboard'])->name('dashboard');
