@@ -10,7 +10,7 @@ class CAuth extends Controller
 {
     public function index()
     {
-        return view('login');
+        return view('login', ['page_name' => 'Login']);
     }
     public function login(Request $request)
     {
