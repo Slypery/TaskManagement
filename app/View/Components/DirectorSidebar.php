@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class director_sidebar extends Component
+class DirectorSidebar extends Component
 {
     /**
      * Create a new component instance.
@@ -22,6 +22,6 @@ class director_sidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.director_sidebar');
+        return view('components.director-sidebar');
     }
 }

@@ -1,4 +1,5 @@
 var active_modal = [];
+var active_modal_button = [];
 
 function trapFocus(modal_target) {
     var focusable_elements = modal_target.find('a[href], button, textarea, input[type="number"], input[type="text"], input[type="email"], input[type="password"], input[type="radio"], input[type="checkbox"], select, [tabindex]:not([tabindex="-1"])');
@@ -81,5 +82,11 @@ $(() => {
     })
     $('[data-modal-trigger]').on('click', function () {
         show_modal($(this).attr('data-modal-trigger'));
+        active_modal_button.push(this);
     });
+    $(document).on('keydown', function (e){
+        if(e.key == 'Escape'){
+            close_modal($(active_modal.at(-1)));
+        }
+    })
 })
