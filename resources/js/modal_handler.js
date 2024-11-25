@@ -1,6 +1,6 @@
 var active_modal = [];
 var active_modal_button = [];
-
+import $ from 'jquery';
 function trapFocus(modal_target) {
     var focusable_elements = modal_target.find('a[href], button, textarea, input[type="number"], input[type="text"], input[type="email"], input[type="password"], input[type="radio"], input[type="checkbox"], select, [tabindex]:not([tabindex="-1"])');
 

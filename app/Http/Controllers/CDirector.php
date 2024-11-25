@@ -11,7 +11,7 @@ class CDirector extends Controller
 {
     public function dashboard()
     {
-        return view('dashboard', [
+        return view('add_assignment_to_manager', [
             'page_name' => 'Dashboard'
         ]);
     }
@@ -20,7 +20,7 @@ class CDirector extends Controller
     {
         return view('user_list', [
             'page_name' => 'User List',
-            'user_list' => User::get()
+            'user_list' => User::orderBy('id', 'desc')->get()
         ]);
     }
     public function store_user(Request $request)
@@ -32,7 +32,7 @@ class CDirector extends Controller
             'password' => 'required|min:8'
         ]);
         User::create($request->all());
-        return redirect()->route('director.user_list.index');
+        return redirect()->route('director.user_list.index')->with('success', 'User succesfuly stored!');
     }
     public function update_user(Request $request)
     {
@@ -43,12 +43,12 @@ class CDirector extends Controller
         ]);
         $user = User::find($request->id);
         $user->update($request->all());
-        return redirect()->route('director.user_list.index');
+        return redirect()->route('director.user_list.index')->with('success', 'User succesfuly updated!');
     }
-    public function destroy_user(Request $request, User $user)
+    public function destroy_user(Request $request)
     {
-        $user->delete();
-        return redirect()->route('director.user_list.index');
+        User::destroy($request->id);
+        return redirect()->route('director.user_list.index')->with('success', 'User succesfuly deleted!');
     }
     public function manager_task()
     {

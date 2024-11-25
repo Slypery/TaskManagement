@@ -64,7 +64,7 @@
             </x-horizontal-input-select>
             <button class="mt-2 col-span-12 rounded-[7px] w-full h-fit border-2 bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75">
                 <div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">
-                    Create
+                    Store
                 </div>
             </button>
         </form>
@@ -83,7 +83,7 @@
             </x-horizontal-input-select>
             <button id="EditUserID" name="id" value="" class="mt-2 col-span-12 rounded-[7px] w-full h-fit border-2 bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75">
                 <div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">
-                    Edit
+                    Update
                 </div>
             </button>
         </form>
@@ -95,7 +95,7 @@
             let EditUsername = $('#EditUsername');
             let EditEmail = $('#EditEmail');
             let EditRoles = $('#EditRole').find('option');
-            $('[data-modal-trigger="#ModalEdit"]').on('click', function() {
+            $('[data-edit-id]').on('click', function() {
                 var tds = $(this).closest('tr').find('td');
                 EditUserID.val($(this).attr('data-edit-id'))
                 EditUsername.val(tds[1].innerHTML);
@@ -116,4 +116,71 @@
             })
         })
     </script>
+    <x-modal id="ModalDelete">
+        <x-slot name="header">Delete User Confirmation</x-slot>
+        <div id="DeleteUsername"></div>
+        <div id="DeleteEmail"></div>
+        <p class="text-sm w-96 text-red-500">*note that deleting user is permanent and can cause some missing data related to this user</p>
+        <form action="{{ route('director.user_list.destroy') }}" method="post">
+            @csrf
+            @method('delete')
+            <button id="DeleteUserID" name="id" value="" class="mt-2 col-span-12 rounded-[7px] w-full h-fit border-2 bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75">
+                <div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">
+                    Delete This User
+                </div>
+            </button>
+        </form>
+    </x-modal>
+    {{-- delete form handler --}}
+    <script type="module">
+        $(() => {
+            let DeleteUserID = $('#DeleteUserID');
+            let DeleteUsername = $('#DeleteUsername');
+            let DeleteEmail = $('#DeleteEmail');
+            $('[data-delete-id]').on('click', function() {
+                var tds = $(this).closest('tr').find('td');
+                DeleteUserID.val($(this).attr('data-delete-id'));
+                DeleteUsername.html('Username: ' + tds[1].innerHTML);
+                DeleteEmail.html('Email: ' + tds[2].innerHTML);
+            })
+        })
+    </script>
+    @if (session('success'))
+        <script>
+            $(() => {
+                Swal.fire({
+                    title: "Success!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    customClass: {
+                        popup: "bg-yellow-50 rounded-md",
+                        confirmButton: "rounded-[7px] p-0 border-2 border-solid bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75"
+                    },
+                    didOpen: () => {
+                        Swal.getConfirmButton().innerHTML = `<div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">ok</div>`;
+                    }
+                });
+            })
+        </script>
+    @endif
+    @if ($errors->any())
+        <script>
+            $(() => {
+                $(() => {
+                    Swal.fire({
+                        title: "Error!",
+                        html: "@foreach ($errors->all() as $error){!! $error . '<br>' !!} @endforeach",
+                        icon: "error",
+                        customClass: {
+                            popup: "bg-yellow-50 rounded-md",
+                            confirmButton: "rounded-[7px] p-0 border-2 border-solid bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75"
+                        },
+                        didOpen: () => {
+                            Swal.getConfirmButton().innerHTML = `<div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">ok</div>`;
+                        }
+                    });
+                })
+            })
+        </script>
+    @endif
 @endsection

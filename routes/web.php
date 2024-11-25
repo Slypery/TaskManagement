@@ -26,8 +26,8 @@ Route::prefix('director/')->name('director.')->group(function () {
     Route::prefix('user_list')->name('user_list.')->group(function () {
         Route::get('', [CDirector::class, 'user_list'])->name('index');
         Route::post('',[CDirector::class, 'store_user'])->name('store');
-        Route::put('update/{user}', [CDirector::class, 'update_user'])->name('update');
-        Route::delete('destroy/{user}', [CDirector::class, 'destroy_user'])->name('destroy');
+        Route::put('update', [CDirector::class, 'update_user'])->name('update');
+        Route::delete('destroy', [CDirector::class, 'destroy_user'])->name('destroy');
     });
     Route::prefix('manager_task')->name('manager_task.')->group(function () {
         Route::get('', [CDirector::class, 'manager_task'])->name('index');

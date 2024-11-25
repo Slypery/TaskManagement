@@ -59,3 +59,13 @@ input {
 .col-span-12 {
     grid-column: span 12 / span 12;
 }
+
+.ql-toolbar {
+    border: none !important;
+}
+.ql-container{
+    border: none !important;
+}
+.ql-editor {
+    border: 1px solid rgba(0, 0, 0, 0.195);
+}

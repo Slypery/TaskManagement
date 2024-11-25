@@ -12,7 +12,9 @@
     },
     "dependencies": {
         "autoprefixer": "^10.4.20",
+        "jquery": "^3.7.1",
         "postcss": "^8.4.49",
-        "quill": "^2.0.2"
+        "quill": "^2.0.2",
+        "select2": "^4.1.0-rc.0"
     }
 }
