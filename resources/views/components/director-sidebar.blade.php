@@ -11,4 +11,10 @@
             User List
         </a>
     </li>
+    <li>
+        <a href="{{ route('director.manager_task.index') }}" data-sidebar-active="{{ $pageName == 'Manager Task List' ? 'true' : '' }}"
+            class="flex px-4 py-1 -translate-x-[0.7px] border-yellow-900 hover:border-l-2 hover:bg-yellow-900/5 data-[sidebar-active=true]:border-l-[2px] data-[sidebar-active=true]:border-purple-700 data-[sidebar-active=true]:font-semibold data-[sidebar-active=true]:text-purple-700 transition-all duration-75">
+            Manager Task List
+        </a>
+    </li>
 </ul>
