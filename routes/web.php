@@ -37,4 +37,8 @@ Route::prefix('director/')->name('director.')->group(function () {
         Route::put('update/{managertask}', [CDirector::class, 'update_task'])->name('update');
         Route::delete('destroy/{managertask}', [CDirector::class, 'destroy_task'])->name('destroy');
     });
+    Route::prefix('manager_task_return')->name('manager_task_return.')->group(function(){
+        Route::get('',[CDirector::class, 'return_task'])->name('index');
+        Route::delete('destroy/{managertaskreturn}', [CDirector::class, 'destroy_task_return'])->name('destroy');
+    });
 });

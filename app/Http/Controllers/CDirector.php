@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ManagerTask;
+use App\Models\ManagerTaskReturn;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -141,5 +142,16 @@ class CDirector extends Controller
         $managertask->delete();
 
         return redirect()->route('director.manager_task.index')->with('success', 'Task successfully deleted!');
+    }
+    public function return_task()
+    {
+        return view('manager_task_return', [
+            'page_name' => 'Manager Task Return',
+            'manager_task_return' => ManagerTaskReturn::with('mtask')->get()
+        ]);
+    }
+    public function destroy_task_return(ManagerTaskReturn $managertaskreturn){
+        $managertaskreturn->delete();
+        return redirect()->route('director.manager_task_return.index')->with('success', 'Task return successfully deleted!');
     }
 }
