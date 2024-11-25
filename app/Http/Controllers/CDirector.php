@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ManagerTask;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -47,5 +48,98 @@ class CDirector extends Controller
     {
         $user->delete();
         return redirect()->route('director.user_list.index');
+    }
+    public function manager_task()
+    {
+        return view('manager_task', [
+            'page_name' => 'Manager Task',
+            'manager_task' => ManagerTask::with('assigned_user', 'created_user')->get()
+        ]);
+    }
+    public function assign_task()
+    {
+        return view('assign_task', [
+            'page_name' => 'Manager Task',
+            'manager' => User::where('role', 'manager')->get()
+        ]);
+    }
+    public function store_task(Request $request)
+    {
+        $request->validate([
+            'created_by' => 'required|integer',
+            'assigned_to' => 'required|integer',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'due_date' => 'required|date',
+        ]);
+
+        $fileNames = [];
+        if ($request->hasFile('attachment')) {
+            foreach ($request->file('attachment') as $file) {
+                $originalName = $file->getClientOriginalName();
+                $fileInfo = pathinfo($originalName);
+                $modifiedName = $fileInfo['filename'] . '_' . mt_rand(10000, 99999) . '.' . $fileInfo['extension'];
+
+                $path = $file->storeAs('uploads', $modifiedName, 'public');
+
+                $fileNames[] = $modifiedName;
+            }
+        }
+
+        $data = $request->all();
+        $data['attachment'] = json_encode($fileNames);
+        $data['status'] = 'not viewed';
+        ManagerTask::create($data);
+
+        return redirect()->route('director.manager_task.index')->with('success', 'Task successfully added!');
+    }
+    public function edit_task($id)
+    {
+        return view('edit_task', [
+            'page_name' => 'Manager Task',
+            'task' => ManagerTask::find($id),
+            'manager' => User::where('role', 'manager')->get()
+        ]);
+    }
+    public function update_task(Request $request, ManagerTask $managertask)
+    {
+        $request->validate([
+            'created_by' => 'required|integer',
+            'assigned_to' => 'required|integer',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'due_date' => 'required|date',
+        ]);
+
+        $fileNames = $managertask->attachment ?? [];
+        if ($request->hasFile('attachment')) {
+            foreach ($request->file('attachment') as $file) {
+                $originalName = $file->getClientOriginalName();
+                $fileInfo = pathinfo($originalName);
+                $modifiedName = $fileInfo['filename'] . '_' . mt_rand(10000, 99999) . '.' . $fileInfo['extension'];
+
+                $path = $file->storeAs('uploads', $modifiedName, 'public');
+                $fileNames[] = $modifiedName;
+            }
+        }
+
+        $data = $request->all();
+        $data['attachment'] = json_encode($fileNames);
+        $managertask->update($data);
+
+        return redirect()->route('director.manager_task.index')->with('success', 'Task successfully updated!');
+    }
+    public function destroy_task(ManagerTask $managertask)
+    {
+        $files = $managertask->attachment ?? [];
+        foreach ($files as $file) {
+            $filePath = storage_path(path: 'app/public/uploads/' . $file);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+        $managertask->delete();
+
+        return redirect()->route('director.manager_task.index')->with('success', 'Task successfully deleted!');
     }
 }
