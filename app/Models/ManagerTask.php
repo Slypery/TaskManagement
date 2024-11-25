@@ -9,7 +9,7 @@ class ManagerTask extends Model
 {
     use HasFactory;
 
-    protected $fillaable = [
+    protected $fillable = [
         'created_by',
         'assigned_to',
         'title',
@@ -19,7 +19,16 @@ class ManagerTask extends Model
         'status',
     ];
 
-    public function getAttachmentAttribute($attachment){
+    public function getAttachmentAttribute($attachment)
+    {
         return json_decode($attachment);
+    }
+    public function assigned_user()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
+    public function created_user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

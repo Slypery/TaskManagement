@@ -30,11 +30,11 @@ Route::prefix('director/')->name('director.')->group(function () {
         Route::delete('destroy', [CDirector::class, 'destroy_user'])->name('destroy');
     });
     Route::prefix('manager_task')->name('manager_task.')->group(function () {
-        Route::get('')->name('index');
-        Route::get('assign_task')->name('create');
-        Route::post('');
-        Route::get('edit_task')->name('edit');
-        Route::put('');
-        Route::delete('');
+        Route::get('', [CDirector::class, 'manager_task'])->name('index');
+        Route::get('assign_task', [CDirector::class, 'assign_task'])->name('create');
+        Route::post('', [CDirector::class, 'store_task'])->name(name: 'store');
+        Route::get('edit_task/{id}', [CDirector::class, 'edit_task'])->name('edit');
+        Route::put('update/{managertask}', [CDirector::class, 'update_task'])->name('update');
+        Route::delete('destroy/{managertask}', [CDirector::class, 'destroy_task'])->name('destroy');
     });
 });
