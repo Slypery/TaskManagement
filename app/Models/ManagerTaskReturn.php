@@ -20,4 +20,8 @@ class ManagerTaskReturn extends Model
     {
         return json_decode($attachment);
     }
+    public function mtask()
+    {
+        return $this->belongsTo(ManagerTask::class, 'manager_task_id');
+    }
 }
