@@ -21,7 +21,7 @@
         <aside class="w-64 border-r-[1px] border-gray-300 px-6 pt-8">
             @yield('sidebar')
         </aside>
-        <script>
+        <script type="module">
             $(() => {
                 $('main').removeClass('opacity-0');
             })

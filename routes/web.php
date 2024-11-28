@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CAuth;
 use App\Http\Controllers\CDirector;
+use App\Http\Controllers\CManager;
 use App\Http\Controllers\Tes;
 use Illuminate\Support\Facades\Route;
 
@@ -41,4 +42,7 @@ Route::prefix('director/')->name('director.')->group(function () {
         Route::get('',[CDirector::class, 'return_task'])->name('index');
         Route::delete('destroy/{managertaskreturn}', [CDirector::class, 'destroy_task_return'])->name('destroy');
     });
+});
+Route::prefix('manager/')->name('manager.')->group(function(){
+    Route::get('', [CManager::class, 'dashboard'])->name('dashboard');
 });
