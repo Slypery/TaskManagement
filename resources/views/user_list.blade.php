@@ -146,7 +146,7 @@
         })
     </script>
     @if (session('success'))
-        <script>
+        <script type="module">
             $(() => {
                 Swal.fire({
                     title: "Success!",
@@ -164,7 +164,7 @@
         </script>
     @endif
     @if ($errors->any())
-        <script>
+        <script type="module">
             $(() => {
                 $(() => {
                     Swal.fire({

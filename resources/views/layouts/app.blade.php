@@ -27,7 +27,7 @@
             })
         </script>
 
-        <main class="flex flex-1 items-start px-6 py-8 opacity-0 transition-opacity duration-500 max-h-[calc(100vh-64px)] overflow-auto">
+        <main class="flex flex-1 gap-2 items-start px-6 py-8 opacity-0 transition-opacity duration-500 max-h-[calc(100vh-64px)] overflow-auto">
             @yield('main')
         </main>
     </div>

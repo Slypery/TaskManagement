@@ -1,4 +1,5 @@
 @import './table_style.css';
+@import './select2.css';
 
 @tailwind base;
 @tailwind components;
@@ -10,6 +11,11 @@
 
 input {
     outline: none;
+}
+input[type="file"]:focus{
+    /* border-top: 4px solid rgba(0, 0, 0, 0.3);
+    border-left: 2px solid rgba(0, 0, 0, 0.3); */
+    background: rgb(161 98 7 / 0.15);
 }
 
 .col-span-1 {
@@ -67,5 +73,21 @@ input {
     border: none !important;
 }
 .ql-editor {
-    border: 1px solid rgba(0, 0, 0, 0.195);
+    border-top: 1px solid rgba(0, 0, 0, 0.195);
+}
+.ql-picker-options,
+.ql-tooltip{
+    background-color: rgb(249, 245, 220) !important;
+    box-shadow: 5px 6px 8px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 5px;
+    border: 1px solid rgb(161 98 7 / 0.1) !important;
+}
+.ql-header.ql-picker.ql-expanded span {
+    border: 1px solid rgb(161 98 7 / 0.1) !important;
+}
+.ql-header.ql-picker span::before{
+    color: black;
+}
+.ql-editor {
+    min-height: 9rem;
 }
