@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CAuth;
 use App\Http\Controllers\CDirector;
+use App\Http\Controllers\CManager;
 use App\Http\Controllers\Tes;
 use Illuminate\Support\Facades\Route;
 
@@ -37,4 +38,11 @@ Route::prefix('director/')->name('director.')->middleware('auth.role:director')-
         Route::put('update/{managertask}', [CDirector::class, 'update_task'])->name('update');
         Route::delete('destroy/', [CDirector::class, 'destroy_task'])->name('destroy');
     });
+    Route::prefix('manager_task_return')->name('manager_task_return.')->group(function(){
+        Route::get('',[CDirector::class, 'return_task'])->name('index');
+        Route::delete('destroy/{managertaskreturn}', [CDirector::class, 'destroy_task_return'])->name('destroy');
+    });
+});
+Route::prefix('manager/')->name('manager.')->group(function(){
+    Route::get('', [CManager::class, 'dashboard'])->name('dashboard');
 });
