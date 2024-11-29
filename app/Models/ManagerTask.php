@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 
 class ManagerTask extends Model
 {
@@ -18,6 +20,14 @@ class ManagerTask extends Model
         'due_date',
         'status',
     ];
+
+
+    public function setDescriptionAttribute($description)
+    {
+        $config = HTMLPurifier_Config::createDefault();
+        $purifier = new HTMLPurifier($config);
+        $this->attributes['description'] = $purifier->purify($description);
+    }
 
     public function getAttachmentAttribute($attachment)
     {

@@ -10,7 +10,7 @@ class CDirector extends Controller
 {
     public function dashboard()
     {
-        return view('add_assignment_to_manager', [
+        return view('Dashboard', [
             'page_name' => 'Dashboard'
         ]);
     }
@@ -52,14 +52,14 @@ class CDirector extends Controller
     public function manager_task()
     {
         return view('manager_task', [
-            'page_name' => 'Manager Task',
-            'manager_task' => ManagerTask::with('assigned_user', 'created_user')->get()
+            'page_name' => 'Manager Task List',
+            'manager_task' => ManagerTask::with('assigned_user', 'created_user')->orderBy('id', 'desc')->get()
         ]);
     }
     public function assign_task()
     {
         return view('assign_task', [
-            'page_name' => 'Manager Task',
+            'page_name' => 'Assign Task to Manager',
             'manager' => User::where('role', 'manager')->get()
         ]);
     }
@@ -104,7 +104,6 @@ class CDirector extends Controller
     public function update_task(Request $request, ManagerTask $managertask)
     {
         $request->validate([
-            'created_by' => 'required|integer',
             'assigned_to' => 'required|integer',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -129,8 +128,9 @@ class CDirector extends Controller
 
         return redirect()->route('director.manager_task.index')->with('success', 'Task successfully updated!');
     }
-    public function destroy_task(ManagerTask $managertask)
+    public function destroy_task(Request $request)
     {
+        $managertask = ManagerTask::find($request->id);
         $files = $managertask->attachment ?? [];
         foreach ($files as $file) {
             $filePath = storage_path(path: 'app/public/uploads/' . $file);
