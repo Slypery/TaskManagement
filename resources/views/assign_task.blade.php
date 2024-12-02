@@ -39,7 +39,7 @@
         <div class="w-full grid grid-cols-12 gap-2">
             <div class="input-file hidden"></div>
             <div class="input-file flex col-span-6 p-2 border-black border-2 rounded-[5px]">
-                <input type="file" name="attachment[]" id="" class="w-52">
+                <input type="file" name="attachment[]" id="" class="w-full">
                 <button type="button" class="btn-remove-file ml-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
@@ -54,19 +54,13 @@
                     Add More Files
                 </button>
             </div>
-        </div>
-        <button class="mt-2 col-span-12 rounded-[7px] w-full h-fit border-2 bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75">
-            <div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">
-                Add
-            </div>
-        </button>
-        <script type="module">
-            $(() => {
-                $('#BtnAddMoreFiles').on('click', () => {
-                    $($('.input-file').toArray().at(-1)).after(
-                        `
+            <script type="module">
+                $(() => {
+                    $('#BtnAddMoreFiles').on('click', () => {
+                        $($('.input-file').toArray().at(-1)).after(
+                            `
                         <div class="input-file flex col-span-6 p-2 border-black border-2 rounded-[5px]">
-                            <input type="file" name="attachment[]" id="" class="w-52">
+                            <input type="file" name="attachment[]" id="" class="w-full">
                             <button type="button" class="btn-remove-file ml-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
@@ -74,16 +68,22 @@
                             </button>
                         </div>
                         `
-                    );
-                    $('.btn-remove-file').off('click').on('click', function() {
+                        );
+                        $('.btn-remove-file').off('click').on('click', function() {
+                            $(this).closest('div').remove();
+                        })
+                    })
+                    $('.btn-remove-file').on('click', function() {
                         $(this).closest('div').remove();
                     })
                 })
-                $('.btn-remove-file').on('click', function() {
-                    $(this).closest('div').remove();
-                })
-            })
-        </script>
+            </script>
+        </div>
+        <button class="mt-2 col-span-12 rounded-[7px] w-full h-fit border-2 bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75">
+            <div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">
+                Add
+            </div>
+        </button>
     </form>
     <script type="module">
         $(() => {

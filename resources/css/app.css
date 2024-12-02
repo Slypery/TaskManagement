@@ -18,6 +18,10 @@ input[type="file"]:focus{
     background: rgb(161 98 7 / 0.15);
 }
 
+.peer:checked ~ .peer-checked line.line{
+    display: none;
+}
+
 .col-span-1 {
     grid-column: span 1 / span 1;
 }

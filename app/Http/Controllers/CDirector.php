@@ -6,6 +6,7 @@ use App\Models\ManagerTask;
 use App\Models\ManagerTaskReturn;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CDirector extends Controller
 {
@@ -97,7 +98,7 @@ class CDirector extends Controller
     public function edit_task($id)
     {
         return view('edit_task', [
-            'page_name' => 'Manager Task',
+            'page_name' => 'Manager Task Detail',
             'task' => ManagerTask::find($id),
             'manager' => User::where('role', 'manager')->get()
         ]);
@@ -111,19 +112,23 @@ class CDirector extends Controller
             'due_date' => 'required|date',
         ]);
 
-        $fileNames = $managertask->attachment ?? [];
+        $fileNames = (array) $managertask->attachment ?? [];
+        foreach ($request->attachment_to_delete ?? [] as $item) {
+            unset($fileNames[array_search($item, $fileNames)]);
+            Storage::disk('public')->delete('uploads/'. $item);
+        }
         if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
                 $originalName = $file->getClientOriginalName();
                 $fileInfo = pathinfo($originalName);
                 $modifiedName = $fileInfo['filename'] . '_' . mt_rand(10000, 99999) . '.' . $fileInfo['extension'];
 
-                $path = $file->storeAs('uploads', $modifiedName, 'public');
+                $file->storeAs('uploads', $modifiedName, 'public');
                 $fileNames[] = $modifiedName;
             }
         }
 
-        $data = $request->all();
+        $data = $request->except('attachment_to_delete');
         $data['attachment'] = json_encode($fileNames);
         $managertask->update($data);
 
@@ -150,7 +155,8 @@ class CDirector extends Controller
             'manager_task_return' => ManagerTaskReturn::with('mtask')->get()
         ]);
     }
-    public function destroy_task_return(ManagerTaskReturn $managertaskreturn){
+    public function destroy_task_return(ManagerTaskReturn $managertaskreturn)
+    {
         $managertaskreturn->delete();
         return redirect()->route('director.manager_task_return.index')->with('success', 'Task return successfully deleted!');
     }
