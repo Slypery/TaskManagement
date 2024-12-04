@@ -27,7 +27,7 @@
         @csrf
         @method('put')
         <input id="EditDescription" type="hidden" name="description" value="" required>
-        <a href="{{ route('director.manager_task.index') }}" class="opacity-50 flex">
+        <a href="{{ route('director.manager_task.index') }}" class="opacity-50 inline-flex">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-4 mt-[6px]">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
@@ -47,22 +47,15 @@
             </div>
         </div>
         <x-horizontal-input id="EditDueDate" name="due_date" type="date" label="Due Date" labelSpan="3" other="min={{ $task->created_at->format('Y-m-d') }}" value="{{ $task->due_date }}" />
-        <div class="mt-3">
-            <label onclick="document.querySelector('#RichText div').focus()" class="font-semibold">Description</label>
-            <div class="border-2 border-black rounded-[7px]">
-                <div class="border-t-4 border-l-2 border-yellow-700/10 bg-yellow-700/5">
-                    <div id="RichText">{!! $task->description !!}</div>
-                </div>
-            </div>
-        </div>
+        <x-text-editor name="description" label="Decription" value="{!! $task->description !!}" />
         <div class="w-full grid grid-cols-12 gap-2 mt-2">
             @foreach ($task->attachment as $index => $item)
                 <div class="input-file flex col-span-6 p-2 border-black border-2 rounded-[5px]">
-                    <a href="{{ asset('storage/uploads/' . $item) }}" target="blank" class="hover:underline hover:text-indigo-700 pt-1">
-                        <div class="overflow-div text-nowrap max-w-full overflow-hidden text-ellipsis">
+                    <a href="{{ asset('storage/uploads/' . $item) }}" target="blank" class="flex max-w-[calc(100%-24px)] hover:underline hover:text-indigo-700 pt-1">
+                        <div class="overflow-div overflow-hidden text-nowrap text-ellipsis">
                             {{ $item }}
                         </div>
-                        <div class="overflow-peer hidden">
+                        <div class="overflow-peer hidden peer">
                             {{ substr($item, -12) }}
                         </div>
                     </a>
@@ -78,13 +71,23 @@
                 </div>
             @endforeach
             <script type="module">
-                $(document).ready(function() {
-                    $('.overflow-div').each(function() {
-                        var item = $(this);
+                $(() => {
+                    function overflow_input_file(item) {
+                        item.closest('a').find('div.overflow-peer').addClass('hidden');
                         if (item[0].scrollWidth > item[0].clientWidth) {
-                            item.parent('div').find('div.overflow-peer').removeClass('hidden');
+                            console.log('tes');
+                            item.closest('a').find('div.overflow-peer').removeClass('hidden');
                         }
+                        console.log('tes');
+                    }
+                    $('.overflow-div').each(function() {
+                        overflow_input_file($(this));
                     });
+                    $(window).resize(() => {
+                        $('.overflow-div').each(function() {
+                            overflow_input_file($(this));
+                        });
+                    })
                 });
             </script>
             <div class="input-file hidden"></div>
@@ -137,13 +140,7 @@
     </form>
     <script type="module">
         $(() => {
-            const quill = new Quill('#RichText', {
-                theme: 'snow'
-            });
             $('.select2').select2();
-            $('#FormEdit').on('submit', () => {
-                $('#EditDescription').val(quill.root.innerHTML);
-            })
         });
     </script>
     @if ($errors->any())

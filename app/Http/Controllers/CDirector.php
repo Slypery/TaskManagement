@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\ManagerTask;
 use App\Models\ManagerTaskReturn;
 use App\Models\User;
+use Illuminate\Console\View\Components\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class CDirector extends Controller
 {
     public function dashboard()
     {
-        return view('Dashboard', [
+        return view('director_dashboard', [
             'page_name' => 'Dashboard'
         ]);
     }
@@ -53,20 +55,21 @@ class CDirector extends Controller
     }
     public function manager_task()
     {
-        return view('manager_task', [
+        return view('director_manager_task', [
             'page_name' => 'Manager Task List',
             'manager_task' => ManagerTask::with('assigned_user', 'created_user')->orderBy('id', 'desc')->get()
         ]);
     }
     public function assign_task()
     {
-        return view('assign_task', [
+        return view('director_assign_task', [
             'page_name' => 'Assign Task to Manager',
             'manager' => User::where('role', 'manager')->get()
         ]);
     }
     public function store_task(Request $request)
     {
+        $request->merge(['created_by' => Auth::user()->id]);
         $request->validate([
             'created_by' => 'required|integer',
             'assigned_to' => 'required|integer',
@@ -97,7 +100,11 @@ class CDirector extends Controller
     }
     public function edit_task($id)
     {
-        return view('edit_task', [
+        $managerTask = ManagerTask::find($id);
+        if(!$managerTask){
+            return abort(404);
+        }
+        return view('director_edit_task', [
             'page_name' => 'Manager Task Detail',
             'task' => ManagerTask::find($id),
             'manager' => User::where('role', 'manager')->get()
@@ -139,10 +146,7 @@ class CDirector extends Controller
         $managertask = ManagerTask::find($request->id);
         $files = $managertask->attachment ?? [];
         foreach ($files as $file) {
-            $filePath = storage_path(path: 'app/public/uploads/' . $file);
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
+            Storage::disk('public')->delete('uploads/'. $file);
         }
         $managertask->delete();
 

@@ -1,0 +1,84 @@
+.tiptap {
+    min-height: 128px;
+    outline: none;
+    padding: 8px;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+    color: rgb(0, 0, 0, 0.3);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+}
+
+.tiptap h1 {
+    font-size: 3em;
+    font-weight: bolder;
+    margin-top: 0.5em;
+}
+
+.tiptap h2 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 0.5em;
+}
+
+.tiptap h3 {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin-top: 0.5em;
+}
+
+.tiptap p>s {
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+}
+
+.tiptap a {
+    color: rgb(147, 0, 210);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.tiptap a:hover {
+    color: rgb(70, 0, 209);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.tiptap ul {
+    list-style-type: disc;
+    margin-left: 1.5em;
+    margin-top: 0.5em;
+}
+
+.tiptap ul ul {
+    list-style-type: circle;
+    margin-left: 1.5em;
+    margin-top: 0.5em;
+}
+
+.tiptap ul {
+    list-style-type: disc;
+    margin-left: 1.5em;
+    margin-top: 0.5em;
+}
+
+.tiptap ol {
+    list-style-type: decimal;
+    margin-left: 1.5em;
+    margin-top: 0.5em;
+}
+
+.tiptap ol ol {
+    list-style-type: lower-alpha;
+    margin-left: 1.5em;
+    margin-top: 0.5em;
+}
+
+.tiptap ol ol ol {
+    list-style-type: lower-roman;
+    margin-left: 1.5em;
+    margin-top: 0.5em;
+}

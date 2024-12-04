@@ -11,10 +11,16 @@
         "vite": "^4.5.5"
     },
     "dependencies": {
+        "@tiptap/core": "^2.10.3",
+        "@tiptap/extension-link": "^2.10.3",
+        "@tiptap/extension-placeholder": "^2.10.3",
+        "@tiptap/extension-text-style": "^2.10.3",
+        "@tiptap/extension-underline": "^2.10.3",
+        "@tiptap/starter-kit": "^2.10.3",
         "autoprefixer": "^10.4.20",
         "jquery": "^3.7.1",
         "postcss": "^8.4.49",
-        "quill": "^2.0.2",
-        "select2": "^4.1.0-rc.0"
+        "select2": "^4.1.0-rc.0",
+        "tiptap": "^0.15.0"
     }
 }

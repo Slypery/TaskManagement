@@ -4,7 +4,7 @@
 @endsection
 @section('main')
     <div class="block">
-        <button data-modal-trigger="#ModalCreate" class="mt-2 col-span-12 rounded-[7px] h-fit border-2 bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75">
+        <button data-modal-trigger="#ModalCreate" class="mt-2 col-span-12 rounded-[7px] h-fit border-2 bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75 text-center">
             <div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">
                 Create User
             </div>

@@ -11,8 +11,8 @@ class HorizontalInput extends Component
     /**
      * Create a new component instance.
      */
-    public $id, $type, $name, $label, $labelSpan, $placeholder, $required, $value, $other;
-    public function __construct($id, $type, $name, $label, $placeholder = null, $labelSpan = 3, $required = true, $value = null, $other = null)
+    public $id, $type, $name, $label, $labelSpan, $placeholder, $required, $value, $others;
+    public function __construct($id, $type, $name, $label, $placeholder = null, $labelSpan = 3, $required = true, $value = null, $others = null)
     {
         $this->id = $id;
         $this->type = $type;
@@ -22,7 +22,7 @@ class HorizontalInput extends Component
         $this->placeholder = $placeholder;
         $this->required = $required;
         $this->value = $value;
-        $this->other = explode('|', $other);
+        $this->others = explode('|', $others);
     }
 
     /**

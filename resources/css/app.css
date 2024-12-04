@@ -1,5 +1,6 @@
 @import './table_style.css';
 @import './select2.css';
+@import './tiptap.css';
 
 @tailwind base;
 @tailwind components;
@@ -68,30 +69,4 @@ input[type="file"]:focus{
 
 .col-span-12 {
     grid-column: span 12 / span 12;
-}
-
-.ql-toolbar {
-    border: none !important;
-}
-.ql-container{
-    border: none !important;
-}
-.ql-editor {
-    border-top: 1px solid rgba(0, 0, 0, 0.195);
-}
-.ql-picker-options,
-.ql-tooltip{
-    background-color: rgb(249, 245, 220) !important;
-    box-shadow: 5px 6px 8px rgba(0, 0, 0, 0.05) !important;
-    border-radius: 5px;
-    border: 1px solid rgb(161 98 7 / 0.1) !important;
-}
-.ql-header.ql-picker.ql-expanded span {
-    border: 1px solid rgb(161 98 7 / 0.1) !important;
-}
-.ql-header.ql-picker span::before{
-    color: black;
-}
-.ql-editor {
-    min-height: 9rem;
 }

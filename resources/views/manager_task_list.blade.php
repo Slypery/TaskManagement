@@ -1,17 +1,9 @@
 @extends('layouts.app')
 @section('sidebar')
-    <x-director-sidebar pageName="{{ $page_name }}" />
+    <x-manager-sidebar pageName="{{ $page_name }}" />
 @endsection
 @section('main')
     <div class="block">
-        <a href="{{ route('director.manager_task.create') }}">
-            <button class="mt-2 col-span-12 rounded-[7px] h-fit border-2 bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75">
-                <div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">
-                    Assign Task
-                </div>
-            </button>
-        </a>
-
         <div class="table-style max-w-[calc(100vw-19rem)]">
             <table>
                 <thead>
@@ -19,7 +11,6 @@
                         <th>#</th>
                         <th>Title</th>
                         <th class="text-nowrap">Created By</th>
-                        <th class="text-nowrap">Assigned To</th>
                         <th>Description</th>
                         <th class="text-nowrap">Due Date</th>
                         <th>Status</th>
@@ -32,13 +23,14 @@
                             <td>{{ $index + 1 }}.</td>
                             <td>{{ $item->title }}</td>
                             <td>{{ $item->created_user->username }}</td>
-                            <td>{{ $item->assigned_user->username }}</td>
-                            <td><div class="flex gap-1">{!! substr($item->description, 0, 50) . (strlen($item->description) > 53  ? '...' : '') !!}</div></td>
+                            <td>
+                                <div class="text-ellipsis text-nowrap overflow-hidden max-w-64">{{ strip_tags($item->description) }}</div>
+                            </td>
                             <td class="text-nowrap">{{ $item->due_date }}</td>
                             <td class="text-nowrap">{{ $item->status }}</td>
                             <td>
                                 <div class="flex flex-nowrap">
-                                    <a class="text-blue-600" href="{{ route('director.manager_task.edit', $item->id) }}">
+                                    <a class="text-blue-600" href="{{ route('manager.task_list.detail', $item->id) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                                         </svg>
@@ -56,32 +48,6 @@
             </table>
         </div>
     </div>
-    <x-modal id="ModalDelete">
-        <x-slot name="header">Delete Task Confirmation</x-slot>
-        <div id="DeleteTitle"></div>
-        <p class="text-sm w-96 text-red-500">*note that deleting task is permanent and can cause some missing data related to this task</p>
-        <form action="{{ route('director.manager_task.destroy') }}" method="post">
-            @csrf
-            @method('delete')
-            <button id="DeleteTaskID" name="id" value="" class="mt-2 col-span-12 rounded-[7px] w-full h-fit border-2 bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75">
-                <div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">
-                    Delete This Task
-                </div>
-            </button>
-        </form>
-    </x-modal>
-    {{-- delete form handler --}}
-    <script type="module">
-        $(() => {
-            let DeleteTaskID = $('#DeleteTaskID');
-            let DeleteTitle = $('#DeleteTitle');
-            $('[data-delete-id]').on('click', function() {
-                var tds = $(this).closest('tr').find('td');
-                DeleteTaskID.val($(this).attr('data-delete-id'));
-                DeleteTitle.html('Title: ' + tds[1].innerHTML);
-            })
-        })
-    </script>
     @if (session('success'))
         <script type="module">
             $(() => {

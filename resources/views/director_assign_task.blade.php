@@ -5,9 +5,8 @@
 @section('main')
     <form id="FormAdd" action="{{ route('director.manager_task.store') }}" method="post" enctype="multipart/form-data" class="block w-full max-w-[1000px]">
         @csrf
-        <input type="hidden" name="created_by" value="{{ Auth::user()->id }}">
         <input id="AddDescription" type="hidden" name="description" value="" required>
-        <a href="{{ route('director.manager_task.index') }}" class="opacity-50 flex">
+        <a href="{{ route('director.manager_task.index') }}" class="opacity-50 inline-flex">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25" stroke-width="1.5" stroke="currentColor" class="size-4 mt-[6px]">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
@@ -27,14 +26,7 @@
             </div>
         </div>
         <x-horizontal-input id="AddDueDate" name="due_date" type="date" label="Due Date" other="min={{ date('Y-m-d') }}" />
-        <div class="mt-3">
-            <label onclick="document.querySelector('#RichText div').focus()" class="font-semibold">Description</label>
-            <div class="border-2 border-black rounded-[7px]">
-                <div class="border-t-4 border-l-2 border-yellow-700/10 bg-yellow-700/5">
-                    <div id="RichText"></div>
-                </div>
-            </div>
-        </div>
+        <x-text-editor name="description" label="Decription"/>
         <div class="font-semibold mt-3">Attachments</div>
         <div class="w-full grid grid-cols-12 gap-2">
             <div class="input-file hidden"></div>
@@ -59,14 +51,14 @@
                     $('#BtnAddMoreFiles').on('click', () => {
                         $($('.input-file').toArray().at(-1)).after(
                             `
-                        <div class="input-file flex col-span-6 p-2 border-black border-2 rounded-[5px]">
-                            <input type="file" name="attachment[]" id="" class="w-full">
-                            <button type="button" class="btn-remove-file ml-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
-                                </svg>
-                            </button>
-                        </div>
+                            <div class="input-file flex col-span-6 p-2 border-black border-2 rounded-[5px]">
+                                <input type="file" name="attachment[]" id="" class="w-full">
+                                <button type="button" class="btn-remove-file ml-auto">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+                                    </svg>
+                                </button>
+                            </div>
                         `
                         );
                         $('.btn-remove-file').off('click').on('click', function() {
@@ -87,13 +79,7 @@
     </form>
     <script type="module">
         $(() => {
-            const quill = new Quill('#RichText', {
-                theme: 'snow'
-            });
             $('.select2').select2();
-            $('#FormAdd').on('submit', () => {
-                $('#AddDescription').val(quill.root.innerHTML);
-            })
         });
     </script>
     @if ($errors->any())

@@ -17,10 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [Tes::class, 'index']);
+Route::get('/', function(){
+    return redirect()->route('auth.index');
+});
 Route::prefix('auth/')->name('auth.')->group(function () {
     Route::get('', [CAuth::class, 'index'])->name('index');
     Route::post('login', [CAuth::class, 'login'])->name('login');
+    Route::get('logout', [CAuth::class, 'logout'])->name('logout');
 });
 Route::prefix('director/')->name('director.')->middleware('auth.role:director')->group(function () {
     Route::get('', [CDirector::class, 'dashboard'])->name('dashboard');
@@ -43,6 +46,10 @@ Route::prefix('director/')->name('director.')->middleware('auth.role:director')-
         Route::delete('destroy/{managertaskreturn}', [CDirector::class, 'destroy_task_return'])->name('destroy');
     });
 });
-Route::prefix('manager/')->name('manager.')->group(function(){
+Route::prefix('manager/')->name('manager.')->middleware('auth.role:manager')->group(function(){
     Route::get('', [CManager::class, 'dashboard'])->name('dashboard');
+    Route::prefix('task_list')->name('task_list.')->group(function(){
+        Route::get('', [CManager::class, 'task_list'])->name('index');
+        Route::get('detail/{id}', [CManager::class, 'task_detail'])->name('detail');
+    });
 });
