@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('manager_task_returns', function (Blueprint $table) {
+        Schema::create('employee_submissions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('manager_task_id')->unsigned();
+            $table->bigInteger('employee_task_id')->unsigned();
+            $table->string('title', 70);
             $table->text('description');
             $table->json('attachment');
-            $table->date('return_date');
             $table->timestamps();
 
-            $table->foreign('manager_task_id', 'manager_task_return_manager_task_id')->references('id')->on('manager_tasks')->onDelete('cascade')->onUpdate('no action');
+            $table->foreign('employee_task_id', 'employee_submission_employee_task_id')->references('id')->on('employee_tasks')->onDelete('cascade')->onUpdate('no action');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('manager_task_returns');
+        Schema::dropIfExists('employee_submissions');
     }
 };

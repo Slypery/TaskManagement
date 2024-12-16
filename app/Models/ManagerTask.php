@@ -41,4 +41,11 @@ class ManagerTask extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+    public function employee_task()
+    {
+        return $this->hasMany(EmployeeTask::class, 'manager_task_id');
+    }
+    public function manager_submission(){
+        return $this->hasOne(ManagerSubmission::class, 'manager_task_id');
+    }
 }

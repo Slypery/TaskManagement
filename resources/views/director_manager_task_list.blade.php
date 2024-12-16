@@ -7,7 +7,7 @@
         <a href="{{ route('director.manager_task.create') }}">
             <button class="mt-2 col-span-12 rounded-[7px] h-fit border-2 bg-blue-600 border-black overflow-hidden focus-visible:bg-opacity-75">
                 <div class="px-6 py-1 rounded-[5px] border-b-4 border-r-2 border-blue-800 text-white">
-                    Assign Task
+                    Create Assignment
                 </div>
             </button>
         </a>
@@ -18,7 +18,6 @@
                     <tr>
                         <th>#</th>
                         <th>Title</th>
-                        <th class="text-nowrap">Created By</th>
                         <th class="text-nowrap">Assigned To</th>
                         <th>Description</th>
                         <th class="text-nowrap">Due Date</th>
@@ -31,7 +30,6 @@
                         <tr>
                             <td>{{ $index + 1 }}.</td>
                             <td>{{ $item->title }}</td>
-                            <td>{{ $item->created_user->username }}</td>
                             <td>{{ $item->assigned_user->username }}</td>
                             <td>
                                 <div class="text-ellipsis text-nowrap overflow-hidden max-w-64">{{ strip_tags($item->description) }}</div>
